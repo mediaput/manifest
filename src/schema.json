@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Plugin Manifest Schema",
+  "description": "Schema for validating plugin manifests of MediaPut",
+  "type": "object",
+  "required": [
+    "name",
+    "version",
+    "author",
+    "type",
+    "main",
+    "category",
+    "platform_code"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference for editor intellisense"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*$",
+      "description": "Name of mediaput plugin",
+      "examples": [
+        "my-plugin",
+        "@scope/my-plugin"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(-[0-9A-Za-z-.]+)?(\\+[0-9A-Za-z-.]+)?$",
+      "description": "Version must be parsable by node-semver.",
+      "examples": [
+        "1.0.0",
+        "2.3.4-beta.1",
+        "1.0.0+20240101"
+      ]
+    },
+    "author": {
+      "description": "A person who has been involved in creating or maintaining this plugin.",
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "A string, e.g: Spark Ho <spark@example.com> (https://mediaput.cn)",
+          "examples": [
+            "Spark Ho <spark@example.com> (https://mediaput.cn)"
+          ]
+        },
+        {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "This helps people discover your plugin."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Script",
+        "Config",
+        "Style"
+      ],
+      "description": "Type of mediaput plugin."
+    },
+    "main": {
+      "type": "string",
+      "description": "Entry of mediaput plugin."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Article",
+        "Feed",
+        "Video"
+      ],
+      "description": "Category of mediaput plugin."
+    },
+    "platform_code": {
+      "type": "string",
+      "description": "A code for platform, see in https://mediaput.cn/editor/platform"
+    }
+  }
+}
